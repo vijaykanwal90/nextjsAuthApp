@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken"
 
 export const getDataFromToken = async(request: NextRequest)=>{
 try {
-    
+    console.log("in get data")
     const token  =request.cookies.get("token")?.value || "";
-    // console.log(token)
-    const decodedToken:any =  await jwt.verify(token ,"nextjs");
+    console.log(token)
+    const decodedToken:any =  await jwt.verify(token ,"nextjs!");
     console.log(decodedToken)
     return decodedToken.id;
 
