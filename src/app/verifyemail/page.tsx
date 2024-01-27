@@ -13,35 +13,45 @@ export default function verifyEmailPage() {
     const verifyUserEmail = async () => {
         try {
             // console.log(token)
-            await axios.post('/api/users/verifyemail', { token });
-            // console.log(done)
+            // await axios.post("/api/users/verifyemail", { token });
+            await axios.post("/api/users/verifyemail",{ token })
+            console.log('reached here')
             setVerified(true);
+            // console.log(setVerified)
 
 
         } catch (error: any) {
-
+// console.log(verified)
             setError(true);
-            // console.log(error.response.data)
+            console.log(error.response.data)
 
         }
     }
 
     useEffect(() => {
 
-        const urlToken = window.location.search.split("=")[1];
+        // const urlToken = window.location.search.split("=")[1];
+        const urlToken = window.location.search.split('=')[1];
         // console.log(urlToken)
-        setToken(urlToken || "")
+        // console.log(token)
+        // if(urlToken!=token){
+        //     console.log("both are same")
+        // }
+        // console.log(urlToken)
+        setToken(urlToken )
+        console.log(token)
 
     }, [])
 
     useEffect(() => {
         if (token.length > 0) {
+            // console.log(token.length )
             verifyUserEmail();
         }
     }, [token]);
 
     return (
-        <div className="flex flex-col items-center justify-centter min-h-screen py-2">
+        <div className="flex flex-col items-center justify-center min-h-screen py-2">
 
             <h1 className="text-4xl ">Verify Email</h1>
             <h2 className="p-2 bg-orange-500 text-white">{token ? `${token}` : "no token"}</h2>
@@ -67,3 +77,4 @@ export default function verifyEmailPage() {
 
 
 }
+
