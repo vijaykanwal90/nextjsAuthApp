@@ -24,7 +24,7 @@ export async function POST(request: NextRequest){
 
         user.isVerfied  = true;
         user.verifyToken = undefined;
-        user.verifyTokenExpiry = undefined;
+        // user.verifyTokenExpiry = undefined;
         await user.save();
 
         return NextResponse.json({
@@ -77,8 +77,8 @@ export async function POST(request: NextRequest){
 //     } catch (error: any) {
 
 //         return NextResponse.json({error: error.message},
-     }
+    //  }
 //             {status:500})
         
- }
+//  }
 
