@@ -1,44 +1,44 @@
-import {connect} from "@/dbConfig/dbConfig"
-import { NextRequest, NextResponse } from "next/server"
-import User from "@/models/userModel"
+// import {connect} from "@/dbConfig/dbConfig"
+// import { NextRequest, NextResponse } from "next/server"
+// import User from "@/models/userModel"
 
-connect()
+// connect()
 
-export async function POST(request: NextRequest){
+// export async function POST(request: NextRequest){
 
-    try {
+//     try {
 
-        const reqBody = await request.json()
-        const {token} = reqBody
-        // console.log(" before")
-        // console.log(token)
+//         const reqBody = await request.json()
+//         const {token} = reqBody
+//         // console.log(" before")
+//         // console.log(token)
 
-       const user = await User.findOne({verifyToken: token
-        })
+//        const user = await User.findOne({verifyToken: token
+//         })
 
-        if(!user){
-            return NextResponse.json({error:"Invalid token"},{status:400})
-        }
+//         if(!user){
+//             return NextResponse.json({error:"Invalid token"},{status:400})
+//         }
         
-        console.log(user);
+//         console.log(user);
 
-        user.isVerfied  = true;
-        user.verifyToken = undefined;
-        // user.verifyTokenExpiry = undefined;
-        await user.save();
+//         user.isVerfied  = true;
+//         user.verifyToken = undefined;
+//         // user.verifyTokenExpiry = undefined;
+//         await user.save();
 
-        return NextResponse.json({
-            message:"email verified succesfully",
-            success:true
-        })
+//         return NextResponse.json({
+//             message:"email verified succesfully",
+//             success:true
+//         })
 
-    } catch (error: any) {
+//     } catch (error: any) {
 
-        return NextResponse.json({error: error.message},
-            {status:500})
+//         return NextResponse.json({error: error.message},
+//             {status:500})
         
-    }
-}
+//     }
+// }
 
 // import {connect} from "@/dbConfig/dbConfig"
 // import { NextRequest, NextResponse } from "next/server"
@@ -82,3 +82,44 @@ export async function POST(request: NextRequest){
         
 //  }
 
+import {connect} from "@/dbConfig/dbConfig";
+import { NextRequest, NextResponse } from "next/server";
+import User from "@/models/userModel";
+
+
+
+connect()
+
+
+export async function POST(request: NextRequest){
+
+    try {
+        const reqBody = await request.json()
+        const {token} = reqBody
+        console.log(token);
+
+        const user = await User.findOne({
+            verifyToken: token});
+        console.log(user)
+
+        if (!user) {
+            return NextResponse.json({error: "Invalid token"}, {status: 400})
+        }
+        console.log(user);
+
+        user.isVerfied = true;
+        user.verifyToken = token;
+        // user.verifyTokenExpiry = undefined;
+        await user.save();
+        
+        return NextResponse.json({
+            message: "Email verified successfully",
+            success: true
+        })
+
+
+    } catch (error:any) {
+        return NextResponse.json({error: error.message}, {status: 500})
+    }
+
+}
