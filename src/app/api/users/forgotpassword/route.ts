@@ -13,11 +13,10 @@ export async function POST(request: NextRequest) {
         if (!user) {
             return NextResponse.json({ message: "user not found for this email" }, { status: 400 })
         }
-        const token = await user?.verifyToken;
-        console.log(token)
+        // const token = await user?.verifyToken;
+        // console.log(token)
         return NextResponse.json({
-            data: token,
-            message: "email received",
+            message: "user found",
             success: true
         })
 

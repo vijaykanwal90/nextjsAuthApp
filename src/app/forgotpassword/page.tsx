@@ -1,43 +1,53 @@
 "use client";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 require('dotenv').config()
-import Link from "next/link";
+// import Link from "next/link";
 import { NextResponse } from "next/server";
 
 export default function forgotPassword() {
     const router = useRouter();
     const [user, setUser] = React.useState({ email: "" });
-   
-    // const [verified,setVerified] = React.useState(false)
+    const [token, setToken] = React.useState("");
+    
 
     const forgot = async () => {
 
 
         try {
-         const response =  await axios.post('/api/users/forgotpassword',user);
-            // setToken(response.data.token);
-            // console.log(setToken)
-            const token = response.data.token
-        //   setVerified(true);
-        // router.push({
-        //     pathname: '/resetpassword',
-        //     query: { token: token },
-        //   });
-       
-   router.push('/resetpassword',{token})
-        //   console.log(data.token)
-
-          console.log("data sent")
-        } catch (error:any) {
-            console.log(error.message)
-            console.log("unable to verify email")
+             await axios.post('/api/users/forgotpassword', {user,token});
             
+            router.push('/resetpassword')
+           
+            return NextResponse.json({
+                message:"user found",
+                sucess:true
+            })
+        } catch (error: any) {
+         
+            return NextResponse.json({
+                message:"user  not found",
+                sucess:false
+            })
         }
-
+        
+     
     }
-  
+
+    useEffect(() => {
+        const urlToken = window.location.search.split("=")[1];
+        setToken(urlToken || "");
+    }, []);
+
+
+    useEffect(() => {
+        if (token.length > 0) {
+            // verifyUserEmail();
+            forgot();
+        }
+    }, [token]);
+
     return (
 
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -55,7 +65,7 @@ export default function forgotPassword() {
 
             <button className="bg-green-800  text-2xl text-white" onClick={forgot}>Reset Password</button>
 
-            
+
         </div>
     )
 }
