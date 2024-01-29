@@ -1,70 +1,45 @@
 "use client";
+import React from "react";
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
-require('dotenv').config()
-// import Link from "next/link";
-import { NextResponse } from "next/server";
+import { useState, useEffect } from "react"
 
-export default function forgotPassword() {
-    const router = useRouter();
-    const [user, setUser] = React.useState({ email: "" });
-    const [token, setToken] = React.useState("");
-    
+export default function ForgotPassword() {
 
-    const forgot = async () => {
-
-
+    const [email, setEmail] = useState("");
+    const [verified, setVerified] = useState(false);
+    // const [token , setToken] = useState("")
+    const verifyUser = async () => {
         try {
-             await axios.post('/api/users/forgotpassword', {user,token});
-            
-            router.push('/resetpassword')
-           
-            return NextResponse.json({
-                message:"user found",
-                sucess:true
-            })
+
+            await axios.post('/api/users/forgotpassword', { email })
+            setVerified(true)
         } catch (error: any) {
-         
-            return NextResponse.json({
-                message:"user  not found",
-                sucess:false
-            })
+            console.log(error.message)
+            console.log("error while sending email")
+
         }
-        
-     
+
     }
 
-    useEffect(() => {
-        const urlToken = window.location.search.split("=")[1];
-        setToken(urlToken || "");
-    }, []);
-
-
-    useEffect(() => {
-        if (token.length > 0) {
-            // verifyUserEmail();
-            forgot();
-        }
-    }, [token]);
-
     return (
-
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
-
-
             <label htmlFor="email">email</label>
             <input
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
                 id="email"
                 type="text"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="email"
             />
 
-            <button className="bg-green-800  text-2xl text-white" onClick={forgot}>Reset Password</button>
+            {!verified &&
+                <button onClick={verifyUser} className="bg-green-700 p-2 m-4">Send Email</button>
 
+            }
+            {verified &&
+                <span className="color-green-700 text-2xl">check email and verify from it</span>
+            }
 
         </div>
     )
