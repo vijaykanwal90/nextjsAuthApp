@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
         // check user exist
         const user = await User.findOne({ email })
 
-        console.log(User)
+        // console.log(User)
         if (!user) {
             // console.log(user.email)
             console.log("email to shi daal do")
@@ -37,9 +37,9 @@ export async function POST(request: NextRequest) {
             email: user.email
         }
         // create token
-        console.log("here")
+        // console.log("here")
         const token = await jwt.sign(tokenData, "nextjs!", { expiresIn: "1d" })
-        console.log("correct password")
+        // console.log("correct password")
 
         const response = NextResponse.json({
             message: "login succesful",

@@ -9,9 +9,9 @@ connect();
 
 export async function GET(request:NextRequest){
     try {
-        console.log("gjhgj")
+        
         const userID = await getDataFromToken(request);
-        console.log(userID)
+        // console.log(userID)
       const user = await  User.findOne({_id:userID}).select("-password ");
       // console.log(user)
       return NextResponse.json({
@@ -20,7 +20,7 @@ export async function GET(request:NextRequest){
       })
 
     } catch (error:any) {
-      console.log("first")
+      // console.log("first")
 
         return NextResponse.json({
             error: error.message

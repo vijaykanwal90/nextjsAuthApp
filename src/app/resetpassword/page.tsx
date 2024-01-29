@@ -9,7 +9,7 @@ export default function ResetPassword() {
     const [verified, setVerified] = React.useState(false)
 
     const resetPassword = async () => {
-        await axios.patch('/api/users/resetpassword', { token, password })
+        await axios.post('/api/users/resetpassword', { token, password })
         setVerified(true)
 
 
@@ -22,7 +22,7 @@ export default function ResetPassword() {
     }, [])
     useEffect(() => {
         if (token.length > 0) {
-            resetPassword();
+            resetPassword
         }
     }, [token])
 
@@ -48,7 +48,7 @@ export default function ResetPassword() {
                 verified && 
                <div>
                 <h2 className="text-2xl">password changed</h2>
-                <Link href="/login">
+                <Link  className="text-white"href="/login">
                     Login
                 </Link>
             </div>
