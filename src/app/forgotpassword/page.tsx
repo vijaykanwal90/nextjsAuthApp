@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react"
+// import { u, useEffect } from "react"
 
 export default function ForgotPassword() {
 
-    const [email, setEmail] = useState("");
-    const [verified, setVerified] = useState(false);
+    const [userEmail, setUserEmail] = React.useState("");
+    const [verified, setVerified] = React.useState(false);
     // const [token , setToken] = useState("")
     const verifyUser = async () => {
         try {
-
-            await axios.post('/api/users/forgotpassword', { email })
-            setVerified(true)
+console.log(userEmail)
+            await axios.post('/api/users/forgotpassword', {userEmail} );
+            setVerified(true);
         } catch (error: any) {
             console.log(error.message)
             console.log("error while sending email")
@@ -28,8 +28,8 @@ export default function ForgotPassword() {
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
                 id="email"
                 type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={userEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
                 placeholder="email"
             />
 
