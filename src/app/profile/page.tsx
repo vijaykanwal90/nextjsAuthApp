@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import  React ,{ useState } from "react";
 // import {profile} from "@/app/profile/page"
 
-export default function profile() {
+export default function Profile() {
 
     const router = useRouter()
     const [data, setData] = useState("nothing")
